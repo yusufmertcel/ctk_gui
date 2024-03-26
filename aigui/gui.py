@@ -8,6 +8,7 @@ import time
 import threading
 from tkinter import ttk
 from db import DataBase
+import os
 
 class CustomApp(ctk.CTk):
     def __init__(self):
@@ -19,12 +20,18 @@ class CustomApp(ctk.CTk):
         
 class CustomFrame(ctk.CTkFrame):
     def __init__(self, parent):
-        super().__init__(parent, width=350,
-                     height=250,bg_color="green",
+        super().__init__(parent, width=450,
+                     height=350,bg_color="green",
                      fg_color="gray75",
                      corner_radius=10)
         self.pack(padx=200, pady=200)
 
+        login_image = ctk.CTkImage(light_image=Image.open(os.path.join(os.path.dirname(__file__), 'images/kia_logo.png')), dark_image=Image.open(os.path.join(os.path.dirname(__file__), 'images/kia_logo.png')), size=(300,168)) #width, height
+
+        self.label_logo = ctk.CTkLabel(master=self,
+                                       text="",
+                                       image=login_image)
+        self.label_logo.place(relx=0.5, rely=0.13, anchor=tkinter.CENTER)
 
         self.user_id_entry = ctk.CTkEntry(master=self,
                              placeholder_text="Kullanıcı Adı",
@@ -32,7 +39,7 @@ class CustomFrame(ctk.CTkFrame):
                              height=35,
                              border_width=2,
                              corner_radius=10)
-        self.user_id_entry.place(relx=0.5, rely=0.2, anchor=tkinter.CENTER)
+        self.user_id_entry.place(relx=0.5, rely=0.3, anchor=tkinter.CENTER)
 
         self.password_entry = ctk.CTkEntry(master=self,
                              placeholder_text="Şifre",
@@ -41,10 +48,10 @@ class CustomFrame(ctk.CTkFrame):
                              show="*",
                              border_width=2,
                              corner_radius=10)
-        self.password_entry.place(relx=0.5, rely=0.4, anchor=tkinter.CENTER)
+        self.password_entry.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         
         self.button = ctk.CTkButton(self, text="Giriş", command=self.on_button_click)
-        self.button.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
+        self.button.place(relx=0.5, rely=0.7, anchor=tkinter.CENTER)
 
         self.str_var = StringVar(value="")
 
@@ -55,10 +62,18 @@ class CustomFrame(ctk.CTkFrame):
                             fg_color=("gray","gray75"),
                             corner_radius=8,
                             text_color="white")
-        self.label.place(relx=0.5, rely=0.75, anchor=tkinter.CENTER)  
+        self.label.place(relx=0.5, rely=0.95, anchor=tkinter.CENTER)  
 
+        self.toggle_btn = ctk.CTkButton(master=self, text='Şifreyi Göster/Gizle', width=15, command=self.toggle_password)
+        self.toggle_btn.place(relx=0.5, rely=0.85, anchor=tkinter.CENTER)
           
-        
+
+    def toggle_password(self):
+        if self.password_entry.cget('show') == '':
+            self.password_entry.configure(show='*')
+        else:
+            self.password_entry.configure(show='')
+
     def on_button_click(self):
         #self.update()
         entry_username = self.user_id_entry.get()
@@ -154,7 +169,7 @@ class AdminFrame(ctk.CTkToplevel):
             print(datum)
             self.table.insert("", 'end', values=[index+1]+list(datum.values()))
 
-    def add_user_event():
+    def add_user_event(self):
         pass
 
     def del_user_event():
@@ -170,7 +185,7 @@ class NewFrame(ctk.CTkToplevel):
     def __init__(self, parent, username):
         super().__init__(parent, width=350,
                      height=250,fg_color="gray75")
-
+        self.title("Kamera Panel")
         self.label = ctk.CTkLabel(master=self,
                             text=f"Hoşgeldin {username}. \nLütfen Kamera Bütün Vücudunu Görecek Şekilde Durunuz",
                             width=120,
