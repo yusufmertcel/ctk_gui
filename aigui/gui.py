@@ -187,7 +187,7 @@ class NewFrame(ctk.CTkToplevel):
                      height=250,fg_color="gray75")
         self.title("Kamera Panel")
         self.label = ctk.CTkLabel(master=self,
-                            text=f"Hoşgeldin {username}. \nLütfen Kamera Bütün Vücudunu Görecek Şekilde Durunuz",
+                            text=f"Hoşgeldin {username}. \nLütfen Kamera Bütün Vücudunu Görecek Şekilde Durun",
                             width=120,
                             height=25,
                             fg_color=("gray","gray75"),
@@ -224,11 +224,16 @@ class Camera(threading.Thread):
   
         # Create a label and display it on app 
         self.label_widget = ctk.CTkLabel(master=frame, text="")
-        self.label_widget.pack() 
+        self.label_widget.pack(padx=15, pady=15) 
 
         # Create a button to open the camera in GUI app 
         self.button1 = Button(frame, text="Kamerayı Aç", command=self.open_camera) 
-        self.button1.pack()
+        self.button1.pack(padx=15, pady=15)
+
+        # Create a button to open the camera in GUI app 
+        self.button2 = Button(frame, text="Mail Gonder", command=self.open_camera) 
+        self.button2.pack(padx=15, pady=15)
+
         self.button1['state'] = "active" 
 
     def open_camera(self): 
